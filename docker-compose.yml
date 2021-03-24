@@ -1,0 +1,18 @@
+version: '3.7'
+
+services:
+  web:
+    build:
+      context: ./app
+    command: gunicorn --workers=1 --log-level debug --bind 0.0.0.0:8000 test:app
+    expose:
+      - 8000
+
+  nginx:
+    build:
+      context: ./nginx
+    ports:
+      - 1337:80
+    depends_on:
+      - web
+
